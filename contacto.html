@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contacto — Vicente Ayuso Pino</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f5f0e8;
+      --bg2: #ede7d9;
+      --ink: #1a1714;
+      --ink2: #4a4540;
+      --accent: #c84b2f;
+      --accent2: #e8834a;
+      --border: #d4cdc0;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Epilogue', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 999;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: rgba(245,240,232,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display); font-weight: 800; font-size: 1.1rem;
+      color: var(--ink); text-decoration: none; letter-spacing: -0.03em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--ink2); text-decoration: none;
+      font-size: 0.85rem; font-weight: 400;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    /* LAYOUT */
+    .contact-page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      padding-top: 5rem;
+    }
+
+    /* LEFT PANEL */
+    .contact-left {
+      background: var(--ink);
+      padding: 5rem 3.5rem;
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .contact-left::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,75,47,0.25), transparent 70%);
+    }
+    .contact-left::after {
+      content: '';
+      position: absolute; bottom: -60px; left: -60px;
+      width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,131,74,0.15), transparent 70%);
+    }
+    .left-tag {
+      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent2); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      opacity: 0; animation: fadeUp 0.5s 0.1s forwards;
+    }
+    .left-tag::before { content: ''; width: 28px; height: 1px; background: var(--accent2); }
+    .contact-left h2 {
+      font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 800; letter-spacing: -0.04em; line-height: 0.95;
+      color: #fff; margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+    }
+    .contact-left h2 em { color: var(--accent2); font-style: normal; }
+    .contact-left p {
+      color: rgba(255,255,255,0.45); font-size: 0.95rem; line-height: 1.8;
+      max-width: 340px; margin-bottom: 3rem;
+      opacity: 0; animation: fadeUp 0.6s 0.35s forwards;
+    }
+
+    .contact-info { display: flex; flex-direction: column; gap: 1.2rem; position: relative; z-index: 1; }
+    .contact-info-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.1rem 1.4rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s;
+      opacity: 0; animation: fadeUp 0.6s forwards;
+    }
+    .contact-info-item:nth-child(1) { animation-delay: 0.45s; }
+    .contact-info-item:nth-child(2) { animation-delay: 0.55s; }
+    .contact-info-item:hover {
+      background: rgba(200,75,47,0.12);
+      border-color: rgba(200,75,47,0.25);
+      transform: translateX(4px);
+    }
+    .contact-info-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: rgba(200,75,47,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent2); flex-shrink: 0;
+    }
+    .contact-info-content { flex: 1; }
+    .contact-info-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 0.2rem; }
+    .contact-info-value { font-size: 0.9rem; color: rgba(255,255,255,0.8); font-weight: 400; }
+
+    /* RIGHT PANEL — FORM */
+    .contact-right {
+      padding: 5rem 4rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .form-header { margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.6s 0.2s forwards; }
+    .form-header h3 {
+      font-family: var(--font-display); font-size: 1.8rem; font-weight: 800;
+      letter-spacing: -0.03em; margin-bottom: 0.5rem;
+    }
+    .form-header p { color: var(--ink2); font-size: 0.9rem; line-height: 1.7; }
+
+    .form-group {
+      margin-bottom: 1.4rem;
+      opacity: 0; animation: fadeUp 0.6s forwards;
+    }
+    .form-group:nth-child(1) { animation-delay: 0.3s; }
+    .form-group:nth-child(2) { animation-delay: 0.4s; }
+    .form-group:nth-child(3) { animation-delay: 0.5s; }
+    .form-group:nth-child(4) { animation-delay: 0.6s; }
+    .form-group:nth-child(5) { animation-delay: 0.7s; }
+
+    label {
+      display: block;
+      font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink2); margin-bottom: 0.5rem; font-weight: 500;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.9rem 1.1rem;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: var(--font-body); font-size: 0.95rem; font-weight: 300;
+      color: var(--ink);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      appearance: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(200,75,47,0.08);
+    }
+    textarea { resize: vertical; min-height: 130px; }
+    input::placeholder, textarea::placeholder { color: #b0a99e; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .btn-submit {
+      width: 100%;
+      padding: 1.1rem;
+      background: var(--accent); color: #fff;
+      font-family: var(--font-body); font-size: 1rem; font-weight: 500;
+      border: none; border-radius: 8px;
+      cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+    .btn-submit:hover { background: #a83820; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,75,47,0.28); }
+    .btn-submit:active { transform: translateY(0); }
+
+    /* SUCCESS MESSAGE */
+    #success-msg {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem 1.4rem;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 8px;
+      color: #16a34a;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem; color: var(--ink2);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 860px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .contact-page { grid-template-columns: 1fr; padding-top: 4rem; }
+      .contact-left { padding: 3rem 1.5rem; }
+      .contact-right { padding: 3rem 1.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">V<span>.</span>Ayuso</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="proyectos.html">Proyectos</a></li>
+    <li><a href="contacto.html" class="active">Contacto</a></li>
+  </ul>
+</nav>
+
+<div class="contact-page">
+
+  <!-- LEFT -->
+  <div class="contact-left">
+    <div class="left-tag">Contacto</div>
+    <h2>Hablemos<br>sin <em>rodeos</em></h2>
+    <p>¿Tienes algo interesante que contarme? ¿Quieres colaborar o simplemente saludar? Escríbeme.</p>
+
+    <div class="contact-info">
+      <a href="mailto:vicenteayusopi@gmail.com" class="contact-info-item">
+        <div class="contact-info-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        </div>
+        <div class="contact-info-content">
+          <div class="contact-info-label">Email</div>
+          <div class="contact-info-value">vicenteayusopi@gmail.com</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/vicenteayuso" target="_blank" class="contact-info-item">
+        <div class="contact-info-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        </div>
+        <div class="contact-info-content">
+          <div class="contact-info-label">GitHub</div>
+          <div class="contact-info-value">@vicenteayuso</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="contact-right">
+    <div class="form-header">
+      <h3>Envíame un mensaje</h3>
+      <p>Te responderé lo antes posible a tu correo.</p>
+    </div>
+
+    <!--
+      INSTRUCCIONES PARA ACTIVAR EL FORMULARIO:
+      1. Ve a https://formspree.io y crea una cuenta gratis
+      2. Crea un nuevo formulario y copia tu ID (algo como "xpwzabcd")
+      3. Sustituye "TU_ID_FORMSPREE" en el action de abajo por tu ID real
+         Ejemplo: action="https://formspree.io/f/xpwzabcd"
+    -->
+    <form id="contact-form" action="https://formspree.io/f/TU_ID_FORMSPREE" method="POST">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required/>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="tu@email.com" required/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="asunto">Asunto</label>
+        <input type="text" id="asunto" name="asunto" placeholder="¿De qué quieres hablar?" required/>
+      </div>
+
+      <div class="form-group">
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn-submit">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Enviar mensaje
+        </button>
+      </div>
+
+      <div id="success-msg">✅ ¡Mensaje enviado! Te responderé pronto.</div>
+
+    </form>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 Vicente Ayuso Pino</p>
+  <p><a href="index.html">← Volver al inicio</a></p>
+</footer>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const msg  = document.getElementById('success-msg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const res  = await fetch(form.action, {
+      method: 'POST', body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.reset();
+      msg.style.display = 'block';
+      setTimeout(() => msg.style.display = 'none', 5000);
+    }
+  });
+</script>
+
+</body>
+</html>

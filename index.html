@@ -1,1 +1,367 @@
-<h1>Hola Mundo</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vicente Ayuso Pino</title>
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Syne:wght@400;700;800&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f5f0e8;
+      --bg2: #ede7d9;
+      --ink: #1a1714;
+      --ink2: #4a4540;
+      --accent: #c84b2f;
+      --accent2: #e8834a;
+      --border: #d4cdc0;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Epilogue', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* GRAIN */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 999;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: rgba(245,240,232,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800; font-size: 1.1rem;
+      color: var(--ink); text-decoration: none;
+      letter-spacing: -0.03em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--ink2); text-decoration: none;
+      font-size: 0.85rem; font-weight: 400;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 7rem 3rem 4rem;
+      gap: 4rem;
+      position: relative;
+    }
+    .hero-left { position: relative; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.8rem;
+      opacity: 0; animation: fadeUp 0.6s 0.1s forwards;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block;
+      width: 32px; height: 1px; background: var(--accent);
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      opacity: 0; animation: fadeUp 0.7s 0.25s forwards;
+    }
+    h1 em { color: var(--accent); font-style: normal; }
+    .hero-bio {
+      margin-top: 2.2rem;
+      font-size: 1.05rem; line-height: 1.8;
+      color: var(--ink2); max-width: 480px;
+      opacity: 0; animation: fadeUp 0.7s 0.45s forwards;
+    }
+    .hero-actions {
+      margin-top: 3rem;
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 1rem 2.2rem;
+      font-family: var(--font-body); font-weight: 500; font-size: 0.9rem;
+      text-decoration: none; border-radius: 3px;
+      transition: all 0.22s; cursor: pointer; border: none;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+    }
+    .btn-primary:hover { background: #a83820; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,75,47,0.28); }
+    .btn-secondary {
+      background: transparent; color: var(--ink);
+      border: 1.5px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* HERO RIGHT — decorative card */
+    .hero-right {
+      opacity: 0; animation: fadeLeft 0.8s 0.4s forwards;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .id-card {
+      background: var(--ink);
+      border-radius: 16px;
+      padding: 2.5rem;
+      width: 100%; max-width: 360px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(26,23,20,0.2);
+    }
+    .id-card::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,75,47,0.4), transparent 70%);
+    }
+    .id-card-label {
+      font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); margin-bottom: 2rem;
+    }
+    .id-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 1.5rem; font-weight: 800;
+      color: #fff; margin-bottom: 1.5rem;
+    }
+    .id-name {
+      font-family: var(--font-display); font-size: 1.4rem; font-weight: 800;
+      color: #fff; margin-bottom: 0.3rem; letter-spacing: -0.02em;
+    }
+    .id-role { font-size: 0.85rem; color: var(--accent2); margin-bottom: 2rem; }
+    .id-fields { display: flex; flex-direction: column; gap: 0.9rem; }
+    .id-field { display: flex; justify-content: space-between; align-items: center; }
+    .id-field-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+    .id-field-value { font-size: 0.88rem; color: rgba(255,255,255,0.8); font-weight: 400; }
+    .id-bar {
+      margin-top: 2rem; padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex; gap: 0.5rem;
+    }
+    .id-bar span {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+    }
+    .id-bar span:nth-child(1) { background: var(--accent); }
+    .id-bar span:nth-child(2) { background: var(--accent2); }
+
+    /* SOBRE strip */
+    .sobre-strip {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 3rem;
+    }
+    .sobre-strip-inner {
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      max-width: 900px;
+    }
+    .sobre-item { flex: 1; min-width: 180px; }
+    .sobre-item-num {
+      font-family: var(--font-display); font-size: 3rem; font-weight: 800;
+      color: var(--accent); line-height: 1; margin-bottom: 0.5rem;
+    }
+    .sobre-item-label { font-size: 0.85rem; color: var(--ink2); }
+
+    /* SKILLS */
+    #skills { padding: 6rem 3rem; }
+    .section-header { margin-bottom: 3.5rem; }
+    .section-tag {
+      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-tag::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--accent); }
+    .section-title {
+      font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; letter-spacing: -0.03em; line-height: 1.05;
+    }
+    .skills-list {
+      display: flex; flex-wrap: wrap; gap: 0.75rem;
+    }
+    .skill-pill {
+      padding: 0.7rem 1.4rem;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.9rem; font-weight: 400;
+      color: var(--ink2);
+      transition: all 0.2s;
+      cursor: default;
+    }
+    .skill-pill:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .skill-pill.highlight { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem; color: var(--ink2);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* ANIMS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translateX(28px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 860px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero { grid-template-columns: 1fr; padding: 5.5rem 1.5rem 3rem; gap: 3rem; }
+      .hero-right { order: -1; }
+      .id-card { max-width: 100%; }
+      section, .sobre-strip { padding: 4rem 1.5rem; }
+      #skills { padding: 4rem 1.5rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">V<span>.</span>Ayuso</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Inicio</a></li>
+    <li><a href="proyectos.html">Proyectos</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Desarrollador en formación</p>
+    <h1>Vicente<br>Ayuso <em>Pino</em></h1>
+    <p class="hero-bio">
+      18 años. Estudiante de <strong>DAW</strong> en el IES Castelar de Badajoz.
+      Aprendiendo a construir la web desde los cimientos, con curiosidad y muchas ganas.
+    </p>
+    <div class="hero-actions">
+      <a href="proyectos.html" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Mis proyectos
+      </a>
+      <a href="contacto.html" class="btn btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Contactar
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="id-card">
+      <div class="id-card-label">Perfil — 2025</div>
+      <div class="id-avatar">VA</div>
+      <div class="id-name">Vicente Ayuso Pino</div>
+      <div class="id-role">Estudiante DAW · Frontend Learner</div>
+      <div class="id-fields">
+        <div class="id-field">
+          <span class="id-field-label">Edad</span>
+          <span class="id-field-value">18 años</span>
+        </div>
+        <div class="id-field">
+          <span class="id-field-label">Centro</span>
+          <span class="id-field-value">IES Castelar</span>
+        </div>
+        <div class="id-field">
+          <span class="id-field-label">Ciudad</span>
+          <span class="id-field-value">Badajoz</span>
+        </div>
+        <div class="id-field">
+          <span class="id-field-label">Ciclo</span>
+          <span class="id-field-value">DAW 1</span>
+        </div>
+        <div class="id-field">
+          <span class="id-field-label">GitHub</span>
+          <span class="id-field-value">@vicenteayuso</span>
+        </div>
+      </div>
+      <div class="id-bar">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sobre-strip">
+  <div class="sobre-strip-inner">
+    <div class="sobre-item">
+      <div class="sobre-item-num">18</div>
+      <div class="sobre-item-label">Años de edad</div>
+    </div>
+    <div class="sobre-item">
+      <div class="sobre-item-num">1º</div>
+      <div class="sobre-item-label">Año de DAW</div>
+    </div>
+    <div class="sobre-item">
+      <div class="sobre-item-num">∞</div>
+      <div class="sobre-item-label">Ganas de aprender</div>
+    </div>
+    <div class="sobre-item">
+      <div class="sobre-item-num">01</div>
+      <div class="sobre-item-label">Proyecto publicado</div>
+    </div>
+  </div>
+</div>
+
+<section id="skills">
+  <div class="section-header">
+    <div class="section-tag">Skills</div>
+    <h2 class="section-title">Lo que estoy<br>aprendiendo</h2>
+  </div>
+  <div class="skills-list">
+    <span class="skill-pill highlight">HTML5</span>
+    <span class="skill-pill highlight">CSS3</span>
+    <span class="skill-pill">JavaScript</span>
+    <span class="skill-pill">Git</span>
+    <span class="skill-pill">GitHub</span>
+    <span class="skill-pill">Responsive Design</span>
+    <span class="skill-pill">Bootstrap</span>
+    <span class="skill-pill">Terminal / Bash</span>
+    <span class="skill-pill">Java (iniciando)</span>
+    <span class="skill-pill">Bases de datos</span>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Vicente Ayuso Pino</p>
+  <p>Hecho con curiosidad · <a href="https://github.com/vicenteayuso" target="_blank">GitHub</a></p>
+</footer>
+
+</body>
+</html>
